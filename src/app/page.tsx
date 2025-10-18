@@ -357,6 +357,9 @@ export default function Home() {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-blue-900 mb-1">{font.name}</h3>
+                      {font.description && (
+                        <p className="text-sm text-gray-600 mb-2 line-clamp-2">{font.description}</p>
+                      )}
                       <div className="flex items-center gap-1.5 mb-2">
                         {font.isVip && (
                           <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
@@ -402,7 +405,7 @@ export default function Home() {
 
                   {font.thumbnail && (
                     <div className="mb-3">
-                      <Image
+          <Image
                         src={font.thumbnail}
                         alt={font.name}
                         width={300}

@@ -38,6 +38,16 @@ export default function FontModal({ font, onClose }: FontModalProps) {
             </div>
           )}
 
+          {/* Description */}
+          {font.description && (
+            <div>
+              <h3 className="text-lg font-medium text-blue-900 mb-3">Mô tả</h3>
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <p className="text-blue-800 leading-relaxed">{font.description}</p>
+              </div>
+            </div>
+          )}
+
           {/* Images */}
           {font.images && font.images.length > 0 && (
             <div>

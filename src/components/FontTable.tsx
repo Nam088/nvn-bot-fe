@@ -68,6 +68,19 @@ export default function FontTable({ data, onEdit, onDelete, onView, onBulkDelete
         </div>
       ),
     }),
+    columnHelper.accessor('description', {
+      header: 'Mô tả',
+      cell: (info) => {
+        const description = info.getValue();
+        return description ? (
+          <div className="text-sm text-gray-600 max-w-xs">
+            <p className="line-clamp-2">{description}</p>
+          </div>
+        ) : (
+          <span className="text-gray-400 text-xs italic">Không có mô tả</span>
+        );
+      },
+    }),
     columnHelper.accessor('thumbnail', {
       header: 'Thumbnail',
       cell: (info) => {

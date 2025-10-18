@@ -1,6 +1,7 @@
 export interface FontDto {
   id: string;
   name: string;
+  description?: string;
   fileUrl: string[];
   images: string[];
   isSupportVietnamese: boolean;
@@ -14,6 +15,7 @@ export interface FontDto {
 
 export interface CreateFontDto {
   name: string;
+  description?: string;
   fileUrl?: string[];
   images?: string[];
   isSupportVietnamese?: boolean;

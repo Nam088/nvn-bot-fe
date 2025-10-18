@@ -15,6 +15,7 @@ export default function FontFormTanStack({ font, onSubmit, onCancel, isLoading }
   const form = useForm({
     defaultValues: {
       name: font?.name || '',
+      description: font?.description || '',
       fileUrl: font?.fileUrl || [],
       images: font?.images || [],
       isSupportVietnamese: font?.isSupportVietnamese || false,
@@ -121,6 +122,25 @@ export default function FontFormTanStack({ font, onSubmit, onCancel, isLoading }
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-red-600 text-sm mt-1">{field.state.meta.errors[0]}</p>
                 )}
+              </div>
+            )}
+          </form.Field>
+
+          {/* Description Field */}
+          <form.Field name="description">
+            {(field) => (
+              <div>
+                <label className="block text-sm font-medium text-blue-900 mb-2">
+                  Mô tả
+                </label>
+                <textarea
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows={3}
+                  placeholder="Mô tả về font chữ..."
+                />
               </div>
             )}
           </form.Field>
