@@ -1,12 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Chỉ dùng basePath khi build production
-  ...(process.env.NODE_ENV === 'production' && {
-    basePath: '/nvn-fe',
-    assetPrefix: '/nvn-fe',
-    trailingSlash: true,
-  }),
+  // Tạm thời bỏ basePath để fix lỗi static files
+  // basePath: '/nvn-fe',
   images: {
     remotePatterns: [
       {
