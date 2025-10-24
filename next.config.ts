@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Chỉ dùng assetPrefix để thêm /nvn-fe vào static files
+  basePath: '/nvn-fe',
   assetPrefix: '/nvn-fe',
   images: {
     remotePatterns: [
