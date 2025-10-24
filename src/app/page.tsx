@@ -175,26 +175,24 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-blue-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-900">NVN Font Manager</h1>
-            </div>
-            <button
-              onClick={() => setShowForm(true)}
-              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Plus size={20} />
-              Thêm Font
-            </button>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Page Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-blue-900">
+              Quản lý Font chữ
+            </h1>
+            <p className="text-gray-600 mt-1">Tìm kiếm, thêm và quản lý font chữ cho hệ thống</p>
+          </div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg font-medium"
+          >
+            <Plus size={20} />
+            Thêm Font
+          </button>
+        </div>
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow-sm border border-blue-200 p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">

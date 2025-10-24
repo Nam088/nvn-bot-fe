@@ -335,9 +335,22 @@ export default function FontTable({ data, onEdit, onDelete, onView, onBulkDelete
           </thead>
           <tbody className="bg-white divide-y divide-blue-200">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-blue-50 transition-colors">
+              <tr 
+                key={row.id} 
+                className="hover:bg-blue-50 transition-colors cursor-pointer"
+                onClick={() => onView(row.original)}
+              >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                  <td 
+                    key={cell.id} 
+                    className="px-6 py-4 whitespace-nowrap"
+                    onClick={(e) => {
+                      // Stop propagation for checkbox and actions columns
+                      if (cell.column.id === 'select' || cell.column.id === 'actions') {
+                        e.stopPropagation();
+                      }
+                    }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

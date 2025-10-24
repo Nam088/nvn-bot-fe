@@ -1,22 +1,46 @@
 @import "tailwindcss";
 
+/* React Loading Skeleton Custom Theme */
 :root {
-  --background: #ffffff;
-  --foreground: #1e3a8a;
-  --primary: #2563eb;
-  --primary-light: #dbeafe;
-  --secondary: #f8fafc;
+  --skeleton-color: #dbeafe; /* blue-100 */
+  --skeleton-highlight-color: #eff6ff; /* blue-50 */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Enhanced Skeleton Styling */
+.react-loading-skeleton {
+  --base-color: #dbeafe;
+  --highlight-color: #eff6ff;
+  --animation-duration: 1.5s;
+  --animation-direction: normal;
+  --pseudo-element-display: block;
+  
+  border-radius: 0.5rem !important;
+  line-height: 1;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+/* Shimmer Animation Enhancement */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.react-loading-skeleton::after {
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Circle Skeleton */
+.react-loading-skeleton.circle {
+  border-radius: 50% !important;
+}
+
+/* Custom Container Styles */
+.skeleton-container {
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }

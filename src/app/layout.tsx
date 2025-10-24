@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import QueryProvider from "@/components/providers/QueryProvider";
 import ToastProvider from "@/components/providers/ToastProvider";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NVN Font Manager",
-  description: "Quản lý font chữ với giao diện xanh trắng",
+  title: "NVN Bot Manager",
+  description: "Quản lý Font chữ và Auto-Reply System",
 };
 
 export default function RootLayout({
@@ -32,6 +34,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <ToastProvider>
+            <Navbar />
             {children}
           </ToastProvider>
         </QueryProvider>
