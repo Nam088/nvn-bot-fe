@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: '/nvn-fe',
-  assetPrefix: '/nvn-fe',
+  basePath: '/app',
+  assetPrefix: '/app',
   trailingSlash: true,
   images: {
     remotePatterns: [
