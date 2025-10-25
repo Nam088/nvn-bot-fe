@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MessageSquare, Type, TestTube2, Home } from 'lucide-react';
+import { MessageSquare, Type, TestTube2, Home, Download } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,6 +13,12 @@ export default function Navbar() {
       label: 'Fonts',
       icon: Type,
       description: 'Quản lý Font chữ',
+    },
+    {
+      href: '/tracking',
+      label: 'Tracking',
+      icon: Download,
+      description: 'Theo dõi download font',
     },
     {
       href: '/auto-reply',
