@@ -9,7 +9,7 @@ import FontModal from '@/components/FontModal';
 import DeleteConfirmModal from '@/components/DeleteConfirmModal';
 import BulkDeleteModal from '@/components/BulkDeleteModal';
 import BulkUpdateModal from '@/components/BulkUpdateModal';
-import { Plus, Search, Filter, Grid, List, Edit, Trash2, Eye, X } from 'lucide-react';
+import { Plus, Search, Filter, Grid, List, Edit, Trash2, Eye, X, ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 
@@ -348,100 +348,174 @@ export default function Home() {
             onPageChange={(page) => setSearchParams({ ...searchParams, page })}
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {fonts.map((font) => (
-              <div key={font.id} className="bg-white border border-blue-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-blue-900 mb-1">{font.name}</h3>
-                      {font.description && (
-                        <p className="text-sm text-gray-600 mb-2 line-clamp-2">{font.description}</p>
-                      )}
-                      <div className="flex items-center gap-1.5 mb-2">
-                        {font.isVip && (
-                          <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
-                            VIP
-                          </span>
+          <div className="bg-white rounded-lg shadow-sm border border-blue-200">
+            {/* Grid View */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+              {fonts.map((font) => (
+                <div key={font.id} className="bg-white border border-blue-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-blue-900 mb-1">{font.name}</h3>
+                        {font.description && (
+                          <p className="text-sm text-gray-600 mb-2 line-clamp-2">{font.description}</p>
                         )}
-                        {font.isSupportVietnamese && (
-                          <span className="bg-green-100 text-green-800 text-xs px-3 py-1.5 rounded-full border border-green-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
-                            Tiếng Việt
-                          </span>
-                        )}
-                        {!font.isActive && (
-                          <span className="bg-red-100 text-red-800 text-xs px-3 py-1.5 rounded-full border border-red-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
-                            Không hoạt động
-                          </span>
-                        )}
+                        <div className="flex items-center gap-1.5 mb-2">
+                          {font.isVip && (
+                            <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
+                              VIP
+                            </span>
+                          )}
+                          {font.isSupportVietnamese && (
+                            <span className="bg-green-100 text-green-800 text-xs px-3 py-1.5 rounded-full border border-green-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
+                              Tiếng Việt
+                            </span>
+                          )}
+                          {!font.isActive && (
+                            <span className="bg-red-100 text-red-800 text-xs px-3 py-1.5 rounded-full border border-red-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]">
+                              Không hoạt động
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handleView(font)}
+                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                          title="Xem chi tiết"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleEdit(font)}
+                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                          title="Chỉnh sửa"
+                        >
+                          <Edit size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(font)}
+                          className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                          title="Xóa"
+                        >
+                          <Trash2 size={16} />
+                        </button>
                       </div>
                     </div>
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => handleView(font)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                        title="Xem chi tiết"
-                      >
-                        <Eye size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleEdit(font)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                        title="Chỉnh sửa"
-                      >
-                        <Edit size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(font)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
-                        title="Xóa"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+
+                    {font.thumbnail && (
+                      <div className="mb-3">
+                        <Image
+                          src={font.thumbnail}
+                          alt={font.name}
+                          width={300}
+                          height={128}
+                          className="w-full h-32 object-cover rounded-md border border-blue-100"
+                        />
+                      </div>
+                    )}
+
+                    {font.tags && font.tags.length > 0 && (
+                      <div className="mb-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {font.tags.slice(0, 3).map((tag, index) => (
+                            <span
+                              key={index}
+                              className="bg-blue-100 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                          {font.tags.length > 3 && (
+                            <span 
+                              className="bg-gray-100 text-gray-600 text-xs px-3 py-1.5 rounded-full border border-gray-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]"
+                              title={`${font.tags.slice(3).join(', ')}`}
+                            >
+                              +{font.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="text-sm text-gray-600">
+                      <p>Tạo: {new Date(font.createdAt).toLocaleDateString('vi-VN')}</p>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
 
-                  {font.thumbnail && (
-                    <div className="mb-3">
-          <Image
-                        src={font.thumbnail}
-                        alt={font.name}
-                        width={300}
-                        height={128}
-                        className="w-full h-32 object-cover rounded-md border border-blue-100"
-                      />
-                    </div>
-                  )}
-
-                  {font.tags && font.tags.length > 0 && (
-                    <div className="mb-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {font.tags.slice(0, 3).map((tag, index) => (
-                          <span
-                            key={index}
-                            className="bg-blue-100 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {font.tags.length > 3 && (
-                          <span 
-                            className="bg-gray-100 text-gray-600 text-xs px-3 py-1.5 rounded-full border border-gray-200 font-medium inline-flex items-center whitespace-nowrap min-h-[24px]"
-                            title={`${font.tags.slice(3).join(', ')}`}
-                          >
-                            +{font.tags.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="text-sm text-gray-600">
-                    <p>Tạo: {new Date(font.createdAt).toLocaleDateString('vi-VN')}</p>
+            {/* Pagination for Grid View */}
+            {fontsResponse?.paging && (
+              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-blue-200 sm:px-6">
+                <div className="flex-1 flex justify-between sm:hidden">
+                  <button
+                    onClick={() => setSearchParams({ ...searchParams, page: fontsResponse.paging.page - 1 })}
+                    disabled={fontsResponse.paging.page <= 1}
+                    className="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Trước
+                  </button>
+                  <button
+                    onClick={() => setSearchParams({ ...searchParams, page: fontsResponse.paging.page + 1 })}
+                    disabled={fontsResponse.paging.page >= fontsResponse.paging.totalPages}
+                    className="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Sau
+                  </button>
+                </div>
+                <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-sm text-gray-700">
+                      Hiển thị{' '}
+                      <span className="font-medium">
+                        {(fontsResponse.paging.page - 1) * fontsResponse.paging.limit + 1}
+                      </span>{' '}
+                      đến{' '}
+                      <span className="font-medium">
+                        {Math.min(fontsResponse.paging.page * fontsResponse.paging.limit, fontsResponse.paging.total)}
+                      </span>{' '}
+                      trong tổng số{' '}
+                      <span className="font-medium">{fontsResponse.paging.total}</span>{' '}
+                      kết quả
+                    </p>
+                  </div>
+                  <div>
+                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                      <button
+                        onClick={() => setSearchParams({ ...searchParams, page: 1 })}
+                        disabled={fontsResponse.paging.page <= 1}
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ChevronsLeft size={20} />
+                      </button>
+                      <button
+                        onClick={() => setSearchParams({ ...searchParams, page: fontsResponse.paging.page - 1 })}
+                        disabled={fontsResponse.paging.page <= 1}
+                        className="relative inline-flex items-center px-2 py-2 border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ChevronLeft size={20} />
+                      </button>
+                      <button
+                        onClick={() => setSearchParams({ ...searchParams, page: fontsResponse.paging.page + 1 })}
+                        disabled={fontsResponse.paging.page >= fontsResponse.paging.totalPages}
+                        className="relative inline-flex items-center px-2 py-2 border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ChevronRight size={20} />
+                      </button>
+                      <button
+                        onClick={() => setSearchParams({ ...searchParams, page: fontsResponse.paging.totalPages })}
+                        disabled={fontsResponse.paging.page >= fontsResponse.paging.totalPages}
+                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ChevronsRight size={20} />
+                      </button>
+                    </nav>
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         )}
       </main>
