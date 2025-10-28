@@ -41,7 +41,7 @@ export interface UpdatePriorityDto {
 }
 
 export interface BulkUpdatePriorityDto {
-  updates: {
+  items: {
     id: string;
     priority: number;
   }[];

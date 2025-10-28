@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontDto, CreateFontDto, SearchParams } from '@/types/font';
 import { useFonts, useCreateFont, useUpdateFont, useDeleteFont, useBulkDeleteFonts, useBulkUpdateFonts } from '@/hooks/useFonts';
 import FontTable from '@/components/FontTable';
@@ -26,6 +26,7 @@ export default function Home() {
   const [isSupportVietnamese, setIsSupportVietnamese] = useState<boolean | undefined>();
   const [status, setStatus] = useState<'active' | 'all' | 'inactive'>('all');
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
     font: FontDto | null;
@@ -48,6 +49,33 @@ export default function Home() {
   const bulkUpdateFontsMutation = useBulkUpdateFonts();
 
   const fonts = fontsResponse?.data || [];
+
+  // Responsive: force grid on small screens
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 640px)');
+    const onChange = (e: MediaQueryListEvent) => setIsSmallScreen(e.matches);
+    // Initialize
+    setIsSmallScreen(mql.matches);
+    // Subscribe
+    if ('addEventListener' in mql && typeof mql.addEventListener === 'function') {
+      mql.addEventListener('change', onChange);
+    } else {
+      // Safari/legacy without deprecation warnings
+      (mql as unknown as { addListener?: (cb: (e: MediaQueryListEvent) => void) => void })
+        .addListener?.(onChange);
+    }
+    return () => {
+      if ('removeEventListener' in mql && typeof mql.removeEventListener === 'function') {
+        mql.removeEventListener('change', onChange);
+      } else {
+        (mql as unknown as { removeListener?: (cb: (e: MediaQueryListEvent) => void) => void })
+          .removeListener?.(onChange);
+      }
+    };
+  }, []);
+
+  const effectiveViewMode: 'table' | 'grid' = isSmallScreen ? 'grid' : viewMode;
 
   // Handle search
   const handleSearch = () => {
@@ -178,7 +206,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-bold text-blue-900">
               Quản lý Font chữ
@@ -187,7 +215,7 @@ export default function Home() {
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg font-medium"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg font-medium"
           >
             <Plus size={20} />
             Thêm Font
@@ -196,7 +224,7 @@ export default function Home() {
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow-sm border border-blue-200 p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1">
+            <div className="w-full lg:flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <input
@@ -209,26 +237,26 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex items-stretch lg:items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Filter size={20} className="text-gray-400" />
                 <select
                   value={isSupportVietnamese === undefined ? '' : isSupportVietnamese.toString()}
                   onChange={(e) => setIsSupportVietnamese(
                     e.target.value === '' ? undefined : e.target.value === 'true'
                   )}
-                  className="px-3 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full sm:w-auto px-3 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Tất cả</option>
                   <option value="true">Hỗ trợ Tiếng Việt</option>
                   <option value="false">Không hỗ trợ Tiếng Việt</option>
                 </select>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as 'active' | 'all' | 'inactive')}
-                  className="px-3 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full sm:w-auto px-3 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="all">Tất cả trạng thái</option>
                   <option value="active">Đang hoạt động</option>
@@ -237,13 +265,13 @@ export default function Home() {
               </div>
               <button
                 onClick={handleSearch}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Tìm kiếm
               </button>
               <button
                 onClick={handleClearFilters}
-                className="flex items-center gap-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
                 title="Xóa bộ lọc"
               >
                 <X size={16} />
@@ -253,11 +281,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* View Mode Toggle */}
+        {/* View Mode Toggle (hidden on mobile to force grid) */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Chế độ xem:</span>
-            <div className="flex bg-white border border-blue-200 rounded-lg p-1">
+            <div className="hidden sm:flex bg-white border border-blue-200 rounded-lg p-1">
               <button
                 onClick={() => {
                   setViewMode('table');
@@ -335,7 +363,7 @@ export default function Home() {
               Thêm Font đầu tiên
             </button>
           </div>
-        ) : viewMode === 'table' ? (
+        ) : effectiveViewMode === 'table' ? (
           <FontTable
             data={fonts}
             onEdit={handleEdit}

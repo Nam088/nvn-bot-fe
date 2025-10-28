@@ -361,7 +361,7 @@ export default function FontTable({ data, onEdit, onDelete, onView, onBulkDelete
       </div>
 
       {/* Pagination */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-blue-200 sm:px-6">
+      <div className="bg-white px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-blue-200 sm:px-6">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => onPageChange?.(pagination?.page ? pagination.page - 1 : 1)}

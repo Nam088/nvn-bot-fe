@@ -6,6 +6,7 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   type DragEndEvent,
@@ -68,7 +69,7 @@ function SortableRow({ autoReply, onEdit, onDelete, onView }: SortableRowProps) 
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-blue-100 transition-colors"
+          className="touch-none cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-blue-100 transition-colors"
           {...attributes}
           {...listeners}
           title="Kéo để sắp xếp lại"
@@ -177,7 +178,7 @@ function SortableRow({ autoReply, onEdit, onDelete, onView }: SortableRowProps) 
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-blue-100 transition-colors"
+          className="touch-none cursor-grab active:cursor-grabbing text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-blue-100 transition-colors"
           {...attributes}
           {...listeners}
           title="Kéo để sắp xếp lại"
@@ -205,9 +206,17 @@ export default function AutoReplyTable({
   }, [data]);
 
   const sensors = useSensors(
+    // Desktop/mouse
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // 8px of movement required to start drag
+        distance: 8,
+      },
+    }),
+    // Mobile/touch: prefer press delay to avoid scroll conflicts
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 8,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -226,13 +235,13 @@ export default function AutoReplyTable({
       setItems(newItems);
 
       // Calculate new priorities (1-based)
-      const updates = newItems.map((item, index) => ({
+      const reorderedItems = newItems.map((item, index) => ({
         id: item.id,
         priority: index + 1,
       }));
 
-      // Call the onReorder callback with all updates
-      onReorder(updates);
+      // Call the onReorder callback with all items
+      onReorder(reorderedItems);
     }
   };
 

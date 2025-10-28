@@ -54,7 +54,7 @@ export default function TrackingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-3 mb-2">
+          <div className="flex items-center gap-3 mb-2">
             <Download className="w-8 h-8 text-blue-600" />
             <h1 className="text-3xl font-bold text-gray-900">Download Tracking</h1>
           </div>
@@ -70,7 +70,7 @@ export default function TrackingPage() {
 
         {/* Filters */}
         <div className="bg-white p-6 rounded-lg shadow mb-6">
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="flex items-center gap-2 mb-4">
             <Filter className="w-5 h-5 text-gray-500" />
             <h2 className="text-lg font-medium text-gray-900">Filters</h2>
           </div>
@@ -140,10 +140,10 @@ export default function TrackingPage() {
             </div>
           </div>
           
-          <div className="flex justify-end space-x-2 mt-4">
+          <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
             <button
               onClick={clearFilters}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
               Clear Filters
             </button>
@@ -153,7 +153,7 @@ export default function TrackingPage() {
         {/* Tracking Table */}
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <h2 className="text-lg font-medium text-gray-900">Download Records</h2>
               {data && (
                 <div className="text-sm text-gray-500">

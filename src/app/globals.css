@@ -44,3 +44,12 @@
   border-radius: 0.5rem;
   overflow: hidden;
 }
+
+/* Utility: hide scrollbar for horizontal scroll containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
